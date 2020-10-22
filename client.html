@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>client</title>
+</head>
+<body>
+    <input type="text" placeholder="io emit" id="msg"><button  onclick="send()">send</button>
+    <input type="text" placeholder="broadcast" id="bromsg"><button  onclick="brosend()">send</button>
+
+    <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script>
+        var socket = io('http://localhost:3000');
+
+        socket.on('connect', () => {
+            console.log('client connected!');
+        });
+
+        socket.on('ioemit', (data) => {
+            console.log(data);
+        });
+
+        socket.on('bro', (data) => {
+            console.log(data);
+        });
+
+        function send() {
+            socket.emit('text', document.getElementById('msg').value);
+        }
+        function brosend() {
+            socket.emit('bro', document.getElementById('bromsg').value);
+        }
+    </script>
+</body>
+</html>
